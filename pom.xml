@@ -11,7 +11,8 @@
   
   	<modules>
 		<module>mockinjection</module>
-	</modules>
+		<module>mockfinals</module>
+  	</modules>
   
 	<properties>
 		<junit.version>4.11</junit.version>
