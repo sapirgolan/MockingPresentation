@@ -28,6 +28,7 @@ release.properties
 *.pydevproject
 .metadata
 .gradle
+.project
 bin/
 tmp/
 *.tmp
