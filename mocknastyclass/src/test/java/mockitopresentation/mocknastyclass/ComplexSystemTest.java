@@ -1,5 +1,6 @@
 package mockitopresentation.mocknastyclass;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
@@ -17,7 +18,7 @@ import org.powermock.reflect.Whitebox;
  * in our unit test!
  * 
  * Also: if any of the methods we call aren't stubbed properly, they will return
- * the default value of 0. We want the result of doSomething to be 5, to
+ * the default value of 0. We want the result of doSomething to be 13, to
  * demonstrate all have been stubbed properly.
  */
 
@@ -28,13 +29,13 @@ import org.powermock.reflect.Whitebox;
 public class ComplexSystemTest {
 
 	/**
-	 * We'll use this method to create an instance of the SUT, with all
+	 * We'll use this method to create an instance of the ComplexSystem, with all
 	 * collaborators mocked using PowerMock.
 	 */
 	private static ComplexSystem getNewInstanceToTest() {
 		// Mock the static method call on collaborator 2
 		PowerMockito.mockStatic(Collaborator2.class);
-		PowerMockito.when(Collaborator2.getValueStatic()).thenReturn(1);
+		PowerMockito.when(Collaborator2.getValueStatic()).thenReturn(3);
 
 		// Suppress base class constructor
 		PowerMockito.suppress(PowerMockito.constructor(BaseSystem.class));
@@ -61,7 +62,7 @@ public class ComplexSystemTest {
 		// Since initialization suppressed, need to manually set value
 		// of memberCollaborator field (to a mock)
 		final Collaborator1 mockCollaborator1 = PowerMockito.mock(Collaborator1.class);
-		PowerMockito.when(mockCollaborator1.getValue()).thenReturn(1);
+		PowerMockito.when(mockCollaborator1.getValue()).thenReturn(3);
 		Whitebox.setInternalState(complexSystem, "memberCollaborator", mockCollaborator1);
 
 		return complexSystem;
@@ -75,7 +76,7 @@ public class ComplexSystemTest {
 		// Mock an instance of collaborator3 and stub its final method to
 		// provide as an argument
 		final Collaborator3 mockCollaborator3 = PowerMockito.mock(Collaborator3.class);
-		PowerMockito.when(mockCollaborator3.getValueFinal()).thenReturn(1);
+		PowerMockito.when(mockCollaborator3.getValueFinal()).thenReturn(3);
 
 		/*
 		 * And call the method on it with no console output.
@@ -87,8 +88,9 @@ public class ComplexSystemTest {
 		 * will return the default value of 0. We want the result of doSomething
 		 * to be 5, to demonstrate all have been stubbed properly.
 		 */
-		System.out.println("Resulting value: "
-				+ complexSystem.doSomething(mockCollaborator3));
+		int doSomethingResult = complexSystem.doSomething(mockCollaborator3);
+		System.out.println("Resulting value: " + doSomethingResult);
+		Assert.assertEquals(13, doSomethingResult);
 	}
 }
 
@@ -103,6 +105,6 @@ class MyContext {
 	private static Collaborator1 staticCollaborator;
 	static {
 		staticCollaborator = PowerMockito.mock(Collaborator1.class);
-		PowerMockito.when(staticCollaborator.getValue()).thenReturn(1);
+		PowerMockito.when(staticCollaborator.getValue()).thenReturn(3);
 	}
 };

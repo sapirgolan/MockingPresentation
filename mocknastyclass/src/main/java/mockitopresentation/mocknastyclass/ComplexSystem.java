@@ -8,6 +8,7 @@ package mockitopresentation.mocknastyclass;
  */
 
 public final class ComplexSystem extends BaseSystem {
+	
 	private static Collaborator1 staticCollaborator = new Collaborator1();
 
 	static {
