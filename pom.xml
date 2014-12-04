@@ -12,6 +12,7 @@
   	<modules>
 		<module>mockinjection</module>
 		<module>mockfinals</module>
+		<module>mocknastyclass</module>
   	</modules>
   
 	<properties>
